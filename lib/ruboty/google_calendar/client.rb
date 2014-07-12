@@ -1,5 +1,6 @@
 require 'google/api_client'
 require 'google/api_client/client_secrets'
+require 'active_support/core_ext'
 
 module Ruboty
   module GoogleCalendar
@@ -32,16 +33,20 @@ module Ruboty
         google_api_client.authorization.scope = GOOGLE_CALENDAR_SCOPE
         google_api_client.authorization.fetch_access_token!
 
+        @calendar_id = ENV['GOOGLE_CALENDAR_ID'] || 'primary'
+
         @client = google_api_client
       end
 
-      def get
+      def schedules
         @client.execute(
           api_method: @calendar.events.list,
           parameters: {
-            calendarId: 'primary',
+            calendarId: @calendar_id,
+            timeMin: Time.now.iso8601,
+            timeMax: 1.week.since.iso8601
           }
-        ).data.tap {|s| p s}
+        ).data
       end
     end
   end
