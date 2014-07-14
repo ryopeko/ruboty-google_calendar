@@ -4,15 +4,7 @@ module Ruboty
       on /schedule/, name: "schedule", description: "Fetch schedule from Google Calendar"
 
       def schedule(message)
-        schedules = fetch.items.map do |s|
-          {
-            summary: s.summary,
-            start: s.start.date_time,
-            end: s.end.date_time
-          }
-        end
-
-        output = schedules.map {|s|
+        output = fetch.map {|s|
           "#{s[:summary]}\t#{s[:start]} - #{s[:end]}"
         }.join("\n")
 
@@ -22,7 +14,13 @@ module Ruboty
       private
 
       def fetch
-        Ruboty::GoogleCalendar::Client.new.schedules
+        Ruboty::GoogleCalendar::Client.new.schedules.items.map do |s|
+          {
+            summary: s.summary,
+            start: s.start.date_time,
+            end: s.end.date_time
+          }
+        end
       end
     end
   end
