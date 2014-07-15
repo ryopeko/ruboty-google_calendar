@@ -14,7 +14,8 @@ module Ruboty
       private
 
       def fetch
-        Ruboty::GoogleCalendar::Client.new.schedules.items.map do |s|
+        @client ||= Ruboty::GoogleCalendar::Client.new
+        @client.schedules.items.map do |s|
           {
             summary: s.summary,
             start: s.start.date_time,

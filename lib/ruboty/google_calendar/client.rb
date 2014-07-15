@@ -31,7 +31,6 @@ module Ruboty
 
         google_api_client.authorization = client_secrets.to_authorization
         google_api_client.authorization.scope = GOOGLE_CALENDAR_SCOPE
-        google_api_client.authorization.fetch_access_token!
 
         @calendar_id = ENV['GOOGLE_CALENDAR_ID'] || 'primary'
 
@@ -39,6 +38,7 @@ module Ruboty
       end
 
       def schedules
+        @client.authorization.fetch_access_token!
         @client.execute(
           api_method: @calendar.events.list,
           parameters: {
