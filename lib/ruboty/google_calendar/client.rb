@@ -38,13 +38,15 @@ module Ruboty
       end
 
       def schedules
+        time_offset = ENV['GOOGLE_CALENDAR_SCHEDULE_TIME_OFFSET_DAYS'].try(:to_i) || 7
+
         @client.authorization.fetch_access_token!
         @client.execute(
           api_method: @calendar.events.list,
           parameters: {
             calendarId: @calendar_id,
             timeMin: Time.now.iso8601,
-            timeMax: 1.week.since.iso8601
+            timeMax: time_offset.days.since.iso8601
           }
         ).data
       end
