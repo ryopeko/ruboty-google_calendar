@@ -46,6 +46,7 @@ module Ruboty
           parameters: {
             calendarId: @calendar_id,
             singleEvents: true,
+            orderBy: 'startTime',
             timeMin: Time.now.iso8601,
             timeMax: time_offset.days.since.iso8601
           }
