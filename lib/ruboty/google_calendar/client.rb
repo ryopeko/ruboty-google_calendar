@@ -45,6 +45,7 @@ module Ruboty
           api_method: @calendar.events.list,
           parameters: {
             calendarId: @calendar_id,
+            singleEvents: true,
             timeMin: Time.now.iso8601,
             timeMax: time_offset.days.since.iso8601
           }
