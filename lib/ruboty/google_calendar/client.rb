@@ -9,6 +9,8 @@ module Ruboty
       GOOGLE_AUTH_URI  = 'https://accounts.google.com/o/oauth2/auth'
       GOOGLE_TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
 
+      DEFAULT_OFFSET_DAYS = 7
+
       def initialize
         google_api_client = Google::APIClient.new(
           application_name: 'ruboty-google_calendar',
@@ -38,7 +40,7 @@ module Ruboty
       end
 
       def schedules
-        time_offset = ENV['GOOGLE_CALENDAR_SCHEDULE_TIME_OFFSET_DAYS'].try(:to_i) || 7
+        time_offset = ENV['GOOGLE_CALENDAR_SCHEDULE_TIME_OFFSET_DAYS'].try(:to_i) || DEFAULT_OFFSET_DAYS
 
         @client.authorization.fetch_access_token!
         @client.execute(
