@@ -18,7 +18,20 @@ Or install it yourself as:
 
 ## Usage
 
+```
+@ruboty schedule
+```
 
+## ENV
+
+required env
+
+```
+GOOGLE_API_CLIENT_ID
+GOOGLE_CLIENT_SECRET
+GOOGLE_REDIRECT_URI
+GOOGLE_REFRESH_TOKEN
+```
 
 ## Contributing
 
